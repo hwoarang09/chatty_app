@@ -16,16 +16,13 @@ import HTTP_STATUS from 'http-status-codes';
 import 'express-async-errors';
 import compression from 'compression';
 import Logger from 'bunyan';
-import { config } from './config';
+import { config } from '@root/config';
+import applicationRoutes from '@root/routes';
 import { Server } from 'socket.io'; //밑에서 http.Server랑 다름. 걔는 http에 있는 거고. 이건 socket.io의 Server임
 //그래서 앞에 . 붙는 거로 구분해서 사용할 예정
 import { createClient } from 'redis';
 import { createAdapter } from '@socket.io/redis-adapter';
-import {
-  CustomError,
-  IErrorResponse,
-} from './shared/globals/helpers/error-handler';
-import applicationRoutes from './routes';
+import { CustomError, IErrorResponse } from '@global/helpers/error-handler';
 
 const SERVER_PORT = 5000;
 const log: Logger = config.createLogger('server');
@@ -132,5 +129,7 @@ export class ChattyServer {
     });
   }
 
-  private socketIOConnections(_io: Server): void {}
+  private socketIOConnections(_io: Server): void {
+    log.info('socketIOConnections');
+  }
 }
